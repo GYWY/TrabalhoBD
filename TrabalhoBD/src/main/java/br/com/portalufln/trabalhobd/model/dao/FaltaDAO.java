@@ -22,7 +22,7 @@ public class FaltaDAO implements GenericoDAO<Falta, Long> {
     public void alterar(Falta falta) {
         EntityManager em = JPAUtil.getInstancia().getEntityManager();
         EntityTransaction tx = JPAUtil.getInstancia().getTransaction(em);
-        em.refresh(falta);
+        em.merge(falta);
         tx.commit();
         em.close();
     }

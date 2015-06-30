@@ -22,7 +22,7 @@ public class ProfessorDAO implements GenericoDAO<Professor, Long> {
     public void alterar(Professor professor) {
         EntityManager em = JPAUtil.getInstancia().getEntityManager();
         EntityTransaction tx = JPAUtil.getInstancia().getTransaction(em);
-        em.refresh(professor);
+        em.merge(professor);
         tx.commit();
         em.close();
     }
@@ -51,4 +51,24 @@ public class ProfessorDAO implements GenericoDAO<Professor, Long> {
         return em.find(Professor.class, id);
     }
     
+    public List<Professor> buscarNome(String nome) {
+        EntityManager em = JPAUtil.getInstancia().getEntityManager();
+        Query query = em.createQuery("SELECT c FROM Professor c WHERE c.nome LIKE :nome", Professor.class);
+        query.setParameter("nome", nome);
+        return query.getResultList();
+    }
+    
+    public List<Professor> buscarCpf(String cpf) {
+        EntityManager em = JPAUtil.getInstancia().getEntityManager();
+        Query query = em.createQuery("SELECT c FROM Professor c WHERE c.cpf LIKE :cpf", Professor.class);
+        query.setParameter("cpf", cpf);
+        return query.getResultList();
+    }
+    
+    public List<Professor> buscarDepartamento(String departamento) {
+        EntityManager em = JPAUtil.getInstancia().getEntityManager();
+        Query query = em.createQuery("SELECT c FROM Professor c WHERE c.cpf LIKE :departamento", Professor.class);
+        query.setParameter("departamento", departamento);
+        return query.getResultList();
+    }
 }

@@ -22,7 +22,7 @@ public class TurmaDAO implements GenericoDAO<Turma, Long> {
     public void alterar(Turma turma) {
         EntityManager em = JPAUtil.getInstancia().getEntityManager();
         EntityTransaction tx = JPAUtil.getInstancia().getTransaction(em);
-        em.refresh(turma);
+        em.merge(turma);
         tx.commit();
         em.close();
     }

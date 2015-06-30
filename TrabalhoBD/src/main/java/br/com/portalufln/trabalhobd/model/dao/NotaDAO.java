@@ -22,7 +22,7 @@ public class NotaDAO implements GenericoDAO<Nota, Long> {
     public void alterar(Nota nota) {
         EntityManager em = JPAUtil.getInstancia().getEntityManager();
         EntityTransaction tx = JPAUtil.getInstancia().getTransaction(em);
-        em.refresh(nota);
+        em.merge(nota);
         tx.commit();
         em.close();
     }

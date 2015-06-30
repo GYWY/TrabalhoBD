@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-public class DisciplianDAO implements GenericoDAO<Disciplina, Long> {
+public class DisciplinaDAO implements GenericoDAO<Disciplina, Long> {
 
     @Override
     public void salvar(Disciplina disciplina) {
@@ -22,7 +22,7 @@ public class DisciplianDAO implements GenericoDAO<Disciplina, Long> {
     public void alterar(Disciplina disciplina) {
         EntityManager em = JPAUtil.getInstancia().getEntityManager();
         EntityTransaction tx = JPAUtil.getInstancia().getTransaction(em);
-        em.refresh(disciplina);
+        em.merge(disciplina);
         tx.commit();
         em.close();
     }
@@ -49,6 +49,13 @@ public class DisciplianDAO implements GenericoDAO<Disciplina, Long> {
     public Disciplina buscarId(Long id) {
         EntityManager em = JPAUtil.getInstancia().getEntityManager();
         return em.find(Disciplina.class, id);
+    }
+    
+    public List<Disciplina> buscarNome(String nome) {
+        EntityManager em = JPAUtil.getInstancia().getEntityManager();
+        Query query = em.createQuery("select disciplina from Disciplina disciplina where disciplina.nome like :nome", Disciplina.class);
+        query.setParameter("nome", nome);
+        return query.getResultList();
     }
     
 }

@@ -20,9 +20,9 @@ public class Turma implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    
     @Column
-    private Long ano;
+    private Integer ano;
     
     @Column
     private Integer periodo;
@@ -57,7 +57,7 @@ public class Turma implements Serializable {
         this.listaAlunos = new ArrayList<Aluno>();
     }
 
-    public Turma(Long ano, Integer periodo, String sala, String horario, Integer vaga) {
+    public Turma(Integer ano, Integer periodo, String sala, String horario, Integer vaga) {
         this.ano = ano;
         this.periodo = periodo;
         this.sala = sala;
@@ -65,7 +65,7 @@ public class Turma implements Serializable {
         this.vaga = vaga;
     }
 
-    private Turma(Long ano, Integer periodo, String sala, String horario, Integer vaga, Disciplina disciplina, Professor professor) {
+    private Turma(Integer ano, Integer periodo, String sala, String horario, Integer vaga, Disciplina disciplina, Professor professor) {
         this(ano,periodo,sala,horario,vaga);
         this.disciplina = disciplina;
         this.professor = professor;
@@ -79,11 +79,11 @@ public class Turma implements Serializable {
         this.id = id;
     }
 
-    public Long getAno() {
+    public Integer getAno() {
         return ano;
     }
 
-    public void setAno(Long ano) {
+    public void setAno(Integer ano) {
         this.ano = ano;
     }
 

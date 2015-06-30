@@ -22,7 +22,7 @@ public class AtividadeDAO implements GenericoDAO<Atividade, Long>{
     public void alterar(Atividade atividade) {
         EntityManager em = JPAUtil.getInstancia().getEntityManager();
         EntityTransaction tx = JPAUtil.getInstancia().getTransaction(em);
-        em.refresh(atividade);
+        em.merge(atividade);
         tx.commit();
         em.close();
     }
@@ -50,5 +50,25 @@ public class AtividadeDAO implements GenericoDAO<Atividade, Long>{
         EntityManager em = JPAUtil.getInstancia().getEntityManager();
         return em.find(Atividade.class, id);
     }
+        
+    public List<Atividade> buscarNome(String nome) {
+        EntityManager em = JPAUtil.getInstancia().getEntityManager();
+        Query query = em.createQuery("SELECT c FROM Atividade c WHERE c.nome LIKE :nome", Atividade.class);
+        query.setParameter("nome", nome);
+        return query.getResultList();
+    }
+
+    public List<Atividade> buscarTipo(String tipo) {
+        EntityManager em = JPAUtil.getInstancia().getEntityManager();
+        Query query = em.createQuery("SELECT c FROM Atividade c WHERE c.tipo LIKE :tipo", Atividade.class);
+        query.setParameter("tipo", tipo);
+        return query.getResultList();
+    }
     
+    public List<Atividade> buscarDia(String dia) {
+        EntityManager em = JPAUtil.getInstancia().getEntityManager();
+        Query query = em.createQuery("SELECT c FROM Atividade c WHERE c.dia LIKE :dia", Atividade.class);
+        query.setParameter("dia", dia);
+        return query.getResultList();
+    }
 }

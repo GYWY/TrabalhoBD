@@ -22,7 +22,7 @@ public class AlunoDAO implements GenericoDAO<Aluno, Long>{
     public void alterar(Aluno aluno) {
         EntityManager em = JPAUtil.getInstancia().getEntityManager();
         EntityTransaction tx = JPAUtil.getInstancia().getTransaction(em);
-        em.refresh(aluno);
+        em.merge(aluno);
         tx.commit();
         em.close();
     }
@@ -50,5 +50,18 @@ public class AlunoDAO implements GenericoDAO<Aluno, Long>{
         EntityManager em = JPAUtil.getInstancia().getEntityManager();
         return em.find(Aluno.class, id);
     }
+        
+    public List<Aluno> buscarNome(String nome) {
+        EntityManager em = JPAUtil.getInstancia().getEntityManager();
+        Query query = em.createQuery("SELECT c FROM Aluno c WHERE c.nome LIKE :nome", Aluno.class);
+        query.setParameter("nome", nome);
+        return query.getResultList();
+    }
     
+    public List<Aluno> buscarCpf(String cpf) {
+        EntityManager em = JPAUtil.getInstancia().getEntityManager();
+        Query query = em.createQuery("SELECT c FROM Aluno c WHERE c.cpf LIKE :cpf", Aluno.class);
+        query.setParameter("cpf", cpf);
+        return query.getResultList();
+    }
 }
